@@ -1,0 +1,84 @@
+{
+  "experimental": true,
+  "note": "Simulated environment only. Not validated on real data and never used for real purchasing.",
+  "params": {
+    "mean_daily": 10,
+    "sigma_daily": 4,
+    "lead_mean": 5,
+    "lead_sd": 1.5,
+    "shelf_days": 180,
+    "unit_cost": 2.0,
+    "holding_rate": 0.2,
+    "stockout_penalty_mult": 2.0,
+    "horizon_days": 180
+  },
+  "training_episodes": 1500,
+  "eval_runs": 100,
+  "baselines_fixed_95pct_service": {
+    "reorder_point_fixed_qty": {
+      "fill_rate": 0.9686037624403169,
+      "stockout_day_rate": 0.04205555555555555,
+      "holding_cost": 13.019989041095892,
+      "waste_cost": 0.0,
+      "stockout_penalty": 227.8,
+      "purchase_spend": 3484.8,
+      "avg_on_hand_units": 66.00411111111111,
+      "total_cost": 240.81998904109594,
+      "total_cost_sd": 117.11459082143345
+    },
+    "periodic_order_up_to": {
+      "fill_rate": 0.9824391843293985,
+      "stockout_day_rate": 0.025222222222222222,
+      "holding_cost": 10.775057534246573,
+      "waste_cost": 0.0,
+      "stockout_penalty": 127.84,
+      "purchase_spend": 3493.88,
+      "avg_on_hand_units": 54.623555555555555,
+      "total_cost": 138.61505753424657,
+      "total_cost_sd": 81.16553176858416
+    },
+    "min_max": {
+      "fill_rate": 0.9535746053933934,
+      "stockout_day_rate": 0.06072222222222221,
+      "holding_cost": 9.524964383561644,
+      "waste_cost": 0.0,
+      "stockout_penalty": 337.12,
+      "purchase_spend": 3396.08,
+      "avg_on_hand_units": 48.28627777777778,
+      "total_cost": 346.64496438356167,
+      "total_cost_sd": 164.08237794107555
+    }
+  },
+  "baselines_cost_tuned": {
+    "periodic_order_up_to_cost_tuned": {
+      "fill_rate": 0.9984318263612247,
+      "stockout_day_rate": 0.0023888888888888887,
+      "holding_cost": 14.93922191780822,
+      "waste_cost": 0.0,
+      "stockout_penalty": 11.56,
+      "purchase_spend": 3597.46,
+      "avg_on_hand_units": 75.73355555555555,
+      "total_cost": 26.499221917808217,
+      "total_cost_sd": 25.921335656122455,
+      "tuned_service_level": 0.9995
+    },
+    "min_max_cost_tuned": {
+      "fill_rate": 0.9900908160925503,
+      "stockout_day_rate": 0.014888888888888889,
+      "holding_cost": 12.914465753424656,
+      "waste_cost": 0.0,
+      "stockout_penalty": 71.96,
+      "purchase_spend": 3573.12,
+      "avg_on_hand_units": 65.46916666666667,
+      "total_cost": 84.87446575342466,
+      "total_cost_sd": 75.15175707917327,
+      "tuned_service_level": 0.9995
+    }
+  },
+  "rl_q_learning": {
+    "total_cost": 22.06160000000001,
+    "total_cost_sd": 0.6082063292731426,
+    "fill_rate": 1.0,
+    "avg_on_hand_units": 111.84005555555558
+  }
+}

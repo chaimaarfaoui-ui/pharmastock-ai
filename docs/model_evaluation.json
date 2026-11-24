@@ -1,0 +1,206 @@
+{
+  "data": "SYNTHETIC (seeded generator), not real pharmacy data",
+  "seed": 42,
+  "history_days": 540,
+  "medicines": 20,
+  "holdout_days": 30,
+  "pooled_holdout_metrics": {
+    "seasonal_naive": {
+      "mae": 2.6403915985805066,
+      "rmse": 3.9057544894734435,
+      "wape": 0.48689867445859775,
+      "n_scored_days": 577
+    },
+    "moving_average": {
+      "mae": 2.431790047041347,
+      "rmse": 3.5803370573064437,
+      "wape": 0.44843172168196144,
+      "n_scored_days": 577
+    },
+    "ets": {
+      "mae": 2.3320818721690264,
+      "rmse": 3.3603525727092656,
+      "wape": 0.430045139099242,
+      "n_scored_days": 577
+    },
+    "sarima": {
+      "mae": 2.419830696330871,
+      "rmse": 3.4805258288915533,
+      "wape": 0.4462263700169104,
+      "n_scored_days": 577
+    },
+    "random_forest": {
+      "mae": 2.4738000294284954,
+      "rmse": 3.4725860905318613,
+      "wape": 0.45617852891666405,
+      "n_scored_days": 577
+    },
+    "lightgbm": {
+      "mae": 2.7245588906687273,
+      "rmse": 3.824450719597408,
+      "wape": 0.502419456668538,
+      "n_scored_days": 577
+    },
+    "selected": {
+      "mae": 2.4375824225783758,
+      "rmse": 3.4723028851792694,
+      "wape": 0.44949985868575354,
+      "n_scored_days": 577
+    }
+  },
+  "selected_model_counts": {
+    "moving_average": 6,
+    "ets": 7,
+    "random_forest": 5,
+    "lightgbm": 2
+  },
+  "per_medicine": [
+    {
+      "medicine_id": 1,
+      "selected": "moving_average",
+      "confidence": "validated",
+      "n_censored_days": 2,
+      "holdout_wape_selected": 0.7930029154518949
+    },
+    {
+      "medicine_id": 2,
+      "selected": "ets",
+      "confidence": "validated",
+      "n_censored_days": 57,
+      "holdout_wape_selected": 0.4761036527271842
+    },
+    {
+      "medicine_id": 3,
+      "selected": "ets",
+      "confidence": "validated",
+      "n_censored_days": 22,
+      "holdout_wape_selected": 0.28093087834121383
+    },
+    {
+      "medicine_id": 4,
+      "selected": "random_forest",
+      "confidence": "validated",
+      "n_censored_days": 2,
+      "holdout_wape_selected": 0.40525913813908865
+    },
+    {
+      "medicine_id": 5,
+      "selected": "random_forest",
+      "confidence": "validated",
+      "n_censored_days": 6,
+      "holdout_wape_selected": 0.5278636596162457
+    },
+    {
+      "medicine_id": 6,
+      "selected": "moving_average",
+      "confidence": "validated",
+      "n_censored_days": 29,
+      "holdout_wape_selected": 0.37380952380952376
+    },
+    {
+      "medicine_id": 7,
+      "selected": "moving_average",
+      "confidence": "validated",
+      "n_censored_days": 37,
+      "holdout_wape_selected": 0.6326530612244897
+    },
+    {
+      "medicine_id": 8,
+      "selected": "moving_average",
+      "confidence": "validated",
+      "n_censored_days": 0,
+      "holdout_wape_selected": 0.4962962962962963
+    },
+    {
+      "medicine_id": 9,
+      "selected": "lightgbm",
+      "confidence": "validated",
+      "n_censored_days": 42,
+      "holdout_wape_selected": 1.0303917532635252
+    },
+    {
+      "medicine_id": 10,
+      "selected": "ets",
+      "confidence": "validated",
+      "n_censored_days": 20,
+      "holdout_wape_selected": 0.4341110925144232
+    },
+    {
+      "medicine_id": 11,
+      "selected": "ets",
+      "confidence": "validated",
+      "n_censored_days": 18,
+      "holdout_wape_selected": 0.42630750596451195
+    },
+    {
+      "medicine_id": 12,
+      "selected": "moving_average",
+      "confidence": "validated",
+      "n_censored_days": 15,
+      "holdout_wape_selected": 0.7695852534562213
+    },
+    {
+      "medicine_id": 13,
+      "selected": "moving_average",
+      "confidence": "validated",
+      "n_censored_days": 13,
+      "holdout_wape_selected": 0.7261904761904763
+    },
+    {
+      "medicine_id": 14,
+      "selected": "random_forest",
+      "confidence": "validated",
+      "n_censored_days": 26,
+      "holdout_wape_selected": 0.4255912630453445
+    },
+    {
+      "medicine_id": 15,
+      "selected": "lightgbm",
+      "confidence": "validated",
+      "n_censored_days": 23,
+      "holdout_wape_selected": 0.63674802458722
+    },
+    {
+      "medicine_id": 16,
+      "selected": "ets",
+      "confidence": "validated",
+      "n_censored_days": 4,
+      "holdout_wape_selected": 0.47735491606733116
+    },
+    {
+      "medicine_id": 17,
+      "selected": "ets",
+      "confidence": "validated",
+      "n_censored_days": 2,
+      "holdout_wape_selected": 0.32129824258613404
+    },
+    {
+      "medicine_id": 18,
+      "selected": "ets",
+      "confidence": "validated",
+      "n_censored_days": 42,
+      "holdout_wape_selected": 0.5055831606024207
+    },
+    {
+      "medicine_id": 19,
+      "selected": "random_forest",
+      "confidence": "validated",
+      "n_censored_days": 23,
+      "holdout_wape_selected": 0.48259620704095607
+    },
+    {
+      "medicine_id": 20,
+      "selected": "random_forest",
+      "confidence": "validated",
+      "n_censored_days": 3,
+      "holdout_wape_selected": 0.562667798810286
+    }
+  ],
+  "stockout_detection": {
+    "true_stockout_days": 337,
+    "detected": 337,
+    "recall": 1.0,
+    "false_positive_days": 72,
+    "precision": 0.823960880195599
+  }
+}
