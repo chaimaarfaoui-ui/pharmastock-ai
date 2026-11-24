@@ -13,13 +13,20 @@ docs/      this file, MODEL_EVALUATION.md, RL_EXPERIMENT.md, openapi.json (56 pa
 
 ## Principles
 1. **Deterministic maths is separate from ML.** ML supplies only the demand input. FEFO simulation, safety stock, reorder point and order-up-to are plain formulas; every alert/recommendation stores its inputs (`calculation` / `explanation`) and labels which part was predicted.
-2. **Append-only stock ledger.** Only `services/movements.py` changes batch quantities, in the caller's transaction, with row locks and DB CHECK constraints (`0 ≤ remaining ≤ received`). A randomized test proves ledger sum = batch quantity after 150 mixed operations.
+2. **Append-only stock ledger.** Only `services/movements.py` changes batch quantities, in the caller's transaction, with row locks and DB CHECK constraints (`0 ≤ remaining ≤ received`). A randomized test proves ledger sum = batch quantity after 150 mixed operations. **Verified on real PostgreSQL 16:** `tests/test_concurrency_pg.py` fires 8 to 25 simultaneous sales, write-offs and receipts at limited stock and checks there is no overselling and ledger sum = batch quantity; removing the `FOR UPDATE` lock makes it fail (25 of 25 sales succeeded against 10 units), so the test guards the lock.
 3. **Tenant isolation everywhere.** Every tenant table has `pharmacy_id`; each query filters on it; cross-tenant ids return 404 (no existence leak); foreign keys in request bodies are ownership-checked. Tested per module.
 4. **Humans decide.** Recommendations → approve → *draft* PO → approve → ordered, all audited. No automatic ordering. Expired stock is never allocated; only written off.
 5. **Uncertainty is explicit.** Risk levels, intervals and projections are labelled estimates; unvalidated forecasts are flagged low-confidence.
 
 ## Stockout-aware demand
 A day is censored when closing non-expired stock is zero (rebuilt by replaying the ledger per batch). Censored days are not scored as zero demand and are imputed for training. Products with < 60 usable days get a flagged moving-average fallback; no sales history yields no forecast (demand unknown, not zero).
+
+## Testing
+`pytest` runs on in-memory SQLite by default (concurrency tests are skipped there, since SQLite ignores row locks). To run everything on PostgreSQL, point the tests at a throwaway database (**the tests drop all its tables**):
+```
+TEST_DATABASE_URL=postgresql+psycopg://user:pw@localhost:5432/pharmatest pytest
+```
+Status at the last run: 81 passed + 4 skipped on SQLite; 85 passed on PostgreSQL 16 (migrations 0001–0004 apply cleanly and `alembic check` reports no drift from the models). The full Docker Compose stack and the Celery path have still not been run.
 
 ## Async jobs
 `background_jobs` stores status/progress/result; `GET /jobs/{id}` is tenant-scoped. Default executor is FastAPI BackgroundTasks; `USE_CELERY=true` runs the same handlers in a Celery worker (`app/worker.py`, compose service `worker`). **The Celery path is provided but not exercised by the automated tests.**

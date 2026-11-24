@@ -13,14 +13,30 @@ from app.core.db import Base, get_db
 from app.main import app
 
 
+TEST_DB_URL = os.environ.get("TEST_DATABASE_URL")   # e.g. postgresql+psycopg://user:pw@localhost/db (tests drop all tables!)
+
+
+def make_test_engine():
+    """SQLite in memory by default; a real PostgreSQL when TEST_DATABASE_URL is set."""
+    if TEST_DB_URL:
+        engine = create_engine(TEST_DB_URL, pool_pre_ping=True)
+        Base.metadata.drop_all(engine)
+        return engine
+    return create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
+
+
 @pytest.fixture()
 def client():
-    engine = create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
+    engine = make_test_engine()
     Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
 
+    opened = []   # tests sometimes pull a session straight from the override; close them all on teardown,
+                  # otherwise an open transaction would block the next test's DROP TABLE on PostgreSQL
+
     def override():
         db = Session()
+        opened.append(db)
         try:
             yield db
         finally:
@@ -30,6 +46,10 @@ def client():
     with TestClient(app) as c:
         yield c
     app.dependency_overrides.clear()
+    for db in opened:
+        db.close()
+    if TEST_DB_URL:
+        engine.dispose()
 
 
 def register(client, name="Pharma A", email="a@example.com", password="correct-horse-1"):
